@@ -1,6 +1,7 @@
 import os
 from abc import ABC, abstractmethod
 from contextlib import closing
+import math
 
 import recordio
 
@@ -82,6 +83,12 @@ class ODPSDataReader(AbstractDataReader):
         table_size = self._reader.get_table_size()
         records_per_task = self._kwargs["records_per_task"]
         shards = {}
-        for shard_id in range(table_size / records_per_task):
-            shards[shard_id] = records_per_task
+        num_shards = math.floor(table_size / records_per_task)
+        start_ind = 0
+        for shard_id in range(num_shards):
+            shards[shard_id] = (start_ind, records_per_task)
+            start_ind += records_per_task
+        num_records_remain = table_size % records_per_task
+        if num_records_remain != 0:
+            shards[num_shards + 1] = num_records_remain
         return shards
