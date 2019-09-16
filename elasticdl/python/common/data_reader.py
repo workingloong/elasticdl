@@ -4,6 +4,8 @@ from contextlib import closing
 
 import recordio
 
+from elasticdl.python.common.odps_io import ODPSReader
+
 
 class AbstractDataReader(ABC):
     def __init__(self, **kwargs):
@@ -59,3 +61,27 @@ class RecordIODataReader(AbstractDataReader):
             with closing(recordio.Index(p)) as rio:
                 f_records[p] = rio.num_records()
         return f_records
+
+
+class ODPSDataReader(AbstractDataReader):
+    def __init__(self, **kwargs):
+        AbstractDataReader.__init__(self, **kwargs)
+        self._kwargs = kwargs
+        self._reader = ODPSReader(**self._kwargs)
+
+    def read_records(self, task):
+        records = self._reader.read_batch(
+            start=task.start,
+            end=task.end,
+            columns=None,
+        )
+        for record in records:
+            yield record
+
+    def create_shards(self):
+        table_size = self._reader.get_table_size()
+        records_per_task = self._kwargs["records_per_task"]
+        shards = {}
+        for shard_id in range(table_size / records_per_task):
+            shards[shard_id] = records_per_task
+        return shards
