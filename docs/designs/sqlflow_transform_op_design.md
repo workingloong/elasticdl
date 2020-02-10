@@ -1,9 +1,9 @@
-# Design Of Transformation Operator in SQLFlow
+# Design of Transformation Operator in SQLFlow
 
 This document describes the design for generating Python code using Tensorflow for transformation operators defined in SQLFlow.
 
 ## Motivation
-According [data analysis and transformation](https://github.com/sql-machine-learning/elasticdl/blob/develop/docs/designs/data_transform.md#generate-transform-code-from-sqlflow-statement), users can define transformation keyword in SQLFlow. We need to convert those transformation keywords to executable Python codes using Tensorflow. Then we can transform the data to tensors for model during training and prediction. In ElasticDL, we use Keras API to define model. To implement transformation operators, we can:
+According to [data analysis and transformation](https://github.com/sql-machine-learning/elasticdl/blob/develop/docs/designs/data_transform.md#generate-transform-code-from-sqlflow-statement), users can define transformation keyword in SQLFlow. We need to convert those transformation keywords to executable Python codes using Tensorflow. Then we can transform the data to tensors for model during training and prediction. In ElasticDL, we use Keras API to define model. To implement transformation operators, we can:
 1. Use `tf.feature_column` to transform data and use `DenseFeature` in model to receive the result of `tf.feature_column`.
 2. Use Keras layers to transform data and the output of transformation layer can directly be used by other layers.
 
@@ -29,11 +29,11 @@ The NORMALIZE can scale inputs to [0, 1] by (x - min) / max.
 
 NORMALIZE(x, min, max) \
 Arguments: \
-    x: the input values \
-    min: the minimum of the feature in dataset. \
-    max: the maximum of the feature in dataset. \
+　　x: the input values. \
+　　min: the minimum of the feature in dataset. \
+　　max: the maximum of the feature in dataset. 
 
-Implementation the NORMALIZE using Keras:
+Implement the NORMALIZE using Keras:
 ```python
 class Normalize(tf.keras.layers.Layer):
     """Scaling inputs by (x - min) / max
@@ -50,7 +50,7 @@ class Normalize(tf.keras.layers.Layer):
         return (inputs - min) / max
 ```
 
-Implementation the NORMALIZE using feature column:
+Implement the NORMALIZE using feature column:
 ```python
 
 def generate_normalize_column(name, min, max)
@@ -105,6 +105,7 @@ def get_input_layers():
 
 ```
 
+Keras transformation layers
 ```python
 def transform(input_layers):
     transform_results = []
