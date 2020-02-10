@@ -132,9 +132,6 @@ def custom_model():
 
 Feature column
 ```python
-def normalize(x, min, max):
-    return (x - min) / max
-
 def get_feature_column():
     feature_columns = []
     for name in NORMALIZE_FEATURES:
@@ -153,6 +150,6 @@ def dnn_model_feature_column(feature_columns, input_layers):
 
 def custom_model():
     input_layers = get_input_layers()
-    transform_result = transform(input_layers)
-    return dnn_model_feature_column(transform_result, input_layers)
+    transform_columns = get_feature_column()
+    return dnn_model_feature_column(transform_columns, input_layers)
 ```
