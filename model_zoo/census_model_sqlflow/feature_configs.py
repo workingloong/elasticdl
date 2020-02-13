@@ -89,7 +89,7 @@ workclass_lookup = FeatureTransformInfo(
 )
 marital_status_lookup = FeatureTransformInfo(
     "marital_status_lookup",
-    "marital_status",
+    "marital-status",
     "marital_status_lookup",
     TransformOp.LOOKUP,
     tf.string,
@@ -130,7 +130,7 @@ age_bucketize = FeatureTransformInfo(
 )
 capital_gain_bucketize = FeatureTransformInfo(
     "capital_gain_bucketize",
-    "capital_gain",
+    "capital-gain",
     "capital_gain_bucketize",
     TransformOp.BUCKETIZE,
     tf.float32,
@@ -138,7 +138,7 @@ capital_gain_bucketize = FeatureTransformInfo(
 )
 capital_loss_bucketize = FeatureTransformInfo(
     "capital_loss_bucketize",
-    "capital_loss",
+    "capital-loss",
     "capital_loss_bucketize",
     TransformOp.BUCKETIZE,
     tf.float32,
@@ -146,7 +146,7 @@ capital_loss_bucketize = FeatureTransformInfo(
 )
 hours_per_week_bucketize = FeatureTransformInfo(
     "hours_per_week_bucketize",
-    "hours_per_week",
+    "hours-per-week",
     "hours_per_week_bucketize",
     TransformOp.BUCKETIZE,
     tf.float32,
@@ -164,7 +164,7 @@ group1 = FeatureTransformInfo(
     "group1",
     TransformOp.GROUP,
     None,
-    [8, 7, 6, 5],
+    [8, 7, 6, 6],
 )
 group2 = FeatureTransformInfo(
     "group2",
@@ -287,14 +287,16 @@ FEATURE_TRANSFORM_INFO_EXECUTE_ARRAY = [
 INPUT_SCHEMAS = [
     SchemaInfo("education", tf.string),
     SchemaInfo("occupation", tf.string),
-    SchemaInfo("native_country", tf.string),
+    SchemaInfo("native-country", tf.string),
     SchemaInfo("workclass", tf.string),
-    SchemaInfo("marital_status", tf.string),
+    SchemaInfo("marital-status", tf.string),
     SchemaInfo("relationship", tf.string),
     SchemaInfo("race", tf.string),
     SchemaInfo("sex", tf.string),
     SchemaInfo("age", tf.float32),
-    SchemaInfo("capital_gain", tf.float32),
-    SchemaInfo("capital_loss", tf.float32),
-    SchemaInfo("hours_per_week", tf.float32),
+    SchemaInfo("capital-gain", tf.float32),
+    SchemaInfo("capital-loss", tf.float32),
+    SchemaInfo("hours-per-week", tf.float32),
 ]
+
+LABEL_KEY = "label"
